@@ -3,7 +3,7 @@ Simple load tester and page testing
 
 This is still very much beta and under active development. But most of the basic features I want are already implemented.
 
-Logging on bronzedagger can also be imported into firesword (https://github.com/lmorg/firesword) for analytics.
+Logging on bronzedagger can also be imported into [Firesword](https://github.com/lmorg/firesword) for analytics.
 
 ### How to compile:
 
