@@ -9,7 +9,7 @@ func Usage() {
 Request weight:
 ---------------
   -d int         Duration to run test (default is indefinitely)
-  -r int         Number of requests per routines (default is 5)
+  -r int         Number of requests per routines - executed in sequence (default is 5)
   -c int         Concurrency; number of routines running in parallel (default is 5)
 
 Request packet:
