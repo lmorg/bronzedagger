@@ -40,8 +40,7 @@ func NewJob() (job *Job) {
 	job.Timeout = time.Duration(f_timeout * int64(time.Millisecond))
 
 	job.UserAgent = f_user_agent
-	//r.Referrer= f_referrer
-	//r.Timeout=f_timeout // needs converting to time.Duration
+	job.Referrer = f_referrer
 	job.Method = "GET" // no other method currently supported
 
 	if f_cookie != "" {

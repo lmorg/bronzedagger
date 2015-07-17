@@ -47,7 +47,7 @@ func Flags() {
 	flag.Int64Var(&f_timeout, "timeout", 4000, "connection timeout")
 	flag.BoolVar(&f_insecure, "insecure", false, "disable TLS validity check")
 	flag.BoolVar(&f_redirects, "follow-redirects", false, "")
-	f_gomaxprocs := flag.Bool("no-smp", false, "GOMAXPROCS")
+	f_no_smp := flag.Bool("no-smp", false, "GOMAXPROCS")
 	flag.BoolVar(&f_debug, "debug", false, "debug mode")
 
 	// logging formating
@@ -87,7 +87,7 @@ func Flags() {
 		os.Exit(1)
 	}
 
-	if *f_gomaxprocs {
+	if *f_no_smp {
 		runtime.GOMAXPROCS(runtime.NumCPU())
 	}
 

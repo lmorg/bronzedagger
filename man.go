@@ -15,7 +15,7 @@ Request weight:
 Request packet:
 ---------------
   --ref          Referrer
-  --cookie       Requester cookies
+  --cookies      Requester cookies
   --user-agent   Change user agent
 
 Runtime behavior:

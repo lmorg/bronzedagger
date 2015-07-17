@@ -23,7 +23,7 @@ var (
 	resp_headers bool
 	resp_body    bool
 	display_max  int
-	return_val   int = 0
+	return_val   int
 	TICK         string
 	CROSS        string
 	USER_AGENT   string
