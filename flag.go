@@ -18,10 +18,15 @@ var (
 	f_firesword_log string
 	f_debug         bool
 	f_urls          []string
-	f_cookie        string
+	f_cookies       FlagStrings
 	f_user_agent    string
 	f_config        string
 )
+
+type FlagStrings []string
+
+func (fs *FlagStrings) String() string         { return fmt.Sprint(*fs) }
+func (fs *FlagStrings) Set(value string) error { *fs = append(*fs, value); return nil }
 
 func Flags() {
 	flag.Usage = Usage
@@ -40,7 +45,7 @@ func Flags() {
 
 	// HTTP request
 	flag.StringVar(&f_referrer, "ref", "", "")
-	flag.StringVar(&f_cookie, "cookie", "", "")
+	flag.Var(&f_cookies, "cookie", "")
 	flag.StringVar(&f_user_agent, "user-agent", USER_AGENT, "")
 
 	// behavior

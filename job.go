@@ -43,8 +43,8 @@ func NewJob() (job *Job) {
 	job.Referrer = f_referrer
 	job.Method = "GET" // no other method currently supported
 
-	if f_cookie != "" {
-		ParseCookie(job, f_cookie)
+	for i, _ := range f_cookies {
+		ParseCookie(job, f_cookies[i])
 	}
 
 	return
