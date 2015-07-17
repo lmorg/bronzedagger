@@ -37,7 +37,7 @@ Results:
 
   --no-200       Hide HTTP status 200 from summary
   --no-utf8      Disable UTF-8 characters]
-  --no-color     Disables terminal color escape sequences
+  --no-colour    Disables terminal color escape sequences
 
 Help:
 -----

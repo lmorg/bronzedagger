@@ -53,7 +53,8 @@ func Flags() {
 	// logging formating
 	flag.BoolVar(&f_no_200, "no-200", false, "Hide status 200 responses")
 	f_no_utf8 := flag.Bool("no-utf8", false, "Disable UTF8 characters")
-	f_no_colour := flag.Bool("no-color", false, "Disable color")
+	f_no_color := flag.Bool("no-color", false, "Disable colour")
+	f_no_colour := flag.Bool("no-colour", false, "Disable colour")
 	flag.StringVar(&f_firesword_log, "log", "", "")
 
 	// help
@@ -93,7 +94,7 @@ func Flags() {
 
 	var pass_ico, pass_start, pass_end, fail_ico, fail_start, fail_end string
 
-	if !*f_no_colour {
+	if !*f_no_color || !*f_no_colour {
 		pass_start = "\x1b[32m"
 		pass_end = "\x1b[0m"
 		fail_start = "\x1b[31m"
