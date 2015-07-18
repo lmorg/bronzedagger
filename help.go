@@ -17,6 +17,7 @@ Request packet:
   --ref          Referrer
   --cookies      Requester cookies
   --user-agent   Change user agent
+  -H             Header
 
 Runtime behavior:
 -----------------
