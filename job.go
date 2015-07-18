@@ -47,6 +47,10 @@ func NewJob() (job *Job) {
 		ParseCookie(job, f_cookies[i])
 	}
 
+	for i, _ := range f_headers {
+		ParseHeaders(job, f_headers[i])
+	}
+
 	return
 }
 

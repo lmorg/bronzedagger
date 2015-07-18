@@ -23,6 +23,16 @@ func ParseCookie(job *Job, s string) {
 	}
 }
 
+func ParseHeaders(job *Job, s string) {
+	split := strings.Split(s, ":")
+	if len(split) >= 2 {
+		job.Headers[split[0]] = strings.Join(split[1:], "=")
+	} else {
+		fmt.Println("Invalid header format")
+		os.Exit(1)
+	}
+}
+
 func dialTimeout(job *Job) func(net, addr string) (c net.Conn, err error) {
 	return func(netw, addr string) (net.Conn, error) {
 		// http://stackoverflow.com/questions/16895294/how-to-set-timeout-for-http-get-requests-in-golang#16930649
@@ -56,6 +66,9 @@ func httpClient(job *Job) (client *http.Client, request *http.Request) {
 
 	request.Header.Set("User-Agent", job.UserAgent)
 	request.Header.Set("Referer", job.Referrer)
+	for header, _ := range job.Headers {
+		request.Header.Set(header, job.Headers[header])
+	}
 	debugLog("Host:", u.Host)
 	request.Host = u.Host
 	job.AddCookies(request)

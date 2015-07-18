@@ -19,6 +19,7 @@ var (
 	f_debug         bool
 	f_urls          []string
 	f_cookies       FlagStrings
+	f_headers       FlagStrings
 	f_user_agent    string
 	f_config        string
 )
@@ -47,6 +48,7 @@ func Flags() {
 	flag.StringVar(&f_referrer, "ref", "", "")
 	flag.Var(&f_cookies, "cookie", "")
 	flag.StringVar(&f_user_agent, "user-agent", USER_AGENT, "")
+	flag.Var(&f_headers, "H", "")
 
 	// behavior
 	flag.Int64Var(&f_timeout, "timeout", 4000, "connection timeout")
