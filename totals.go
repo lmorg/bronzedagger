@@ -25,10 +25,7 @@ func UpdateResults() {
 	for {
 		r := <-update_results
 		results[r.Status]++
-
-		if r.Duration != 0 {
-			load_times[r.Duration]++
-		}
+		load_times[r.Duration]++
 	}
 }
 
