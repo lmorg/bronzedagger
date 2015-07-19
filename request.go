@@ -70,7 +70,9 @@ func httpClient(job *Job) (client *http.Client, request *http.Request) {
 		request.Header.Set(header, job.Headers[header])
 	}
 	debugLog("Host:", u.Host)
-	request.Host = u.Host
+	// for some reason 'request.Host' isn't setting the request header, so doing so manually with request.Header
+	//request.Host = u.Host
+	request.Header.Set("Host", u.Host)
 	job.AddCookies(request)
 
 	return client, request

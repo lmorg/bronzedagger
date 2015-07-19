@@ -32,11 +32,13 @@ func (fs *FlagStrings) Set(value string) error { *fs = append(*fs, value); retur
 func Flags() {
 	flag.Usage = Usage
 
-	flag.IntVar(&f_duration, "d", 0, "duration")
-	flag.IntVar(&f_concurrency, "c", 5, "Concurrency")
-	flag.IntVar(&f_nreqs, "r", 5, "requests per thread")
+	d := flag.Int("d", 0, "duration")
+	c := flag.Int("c", 5, "Concurrency")
+	r := flag.Int("r", 5, "requests per thread")
+	f_one_req := flag.Bool("1", false, "single request (alias for -d 1 -c 1 -r 1)")
 	flag.IntVar(&f_rounding, "round", 250, "rounding")
 
+	// TODO: needs to be reimplemented
 	flag.StringVar(&f_config, "config", "", "Config file to use")
 
 	flag.BoolVar(&req_headers, "req", false, "Output request headers")
@@ -73,6 +75,21 @@ func Flags() {
 	flag.Parse()
 
 	f_urls = flag.Args()
+
+	// set curl-like single request - then allows for -d / -c / -r overrides.
+	if f_one_req {
+		f_duration = 1
+		f_concurrency = 1
+		f_nreqs = 1
+	}
+	f_duration = d
+	f_concurrency = c
+	f_nreqs = r
+
+	if f_config != "" {
+		fmt.Println("TODO: needs to be reimplemented")
+		os.Exit(1)
+	}
 
 	if *f_help1 || *f_help2 {
 		flag.Usage()

@@ -11,17 +11,18 @@ Request weight:
   -d int         Duration to run test (default is indefinitely)
   -r int         Number of requests per routines - executed in sequence (default is 5)
   -c int         Concurrency; number of routines running in parallel (default is 5)
+  -1             Single request (alias for -d 1 -r 1 -c 1)
 
 Request packet:
 ---------------
-  --ref          Referrer
-  --cookies      Requester cookies
-  --user-agent   Change user agent
-  -H             Header
+  --ref str        Referrer
+  --cookies str    Requester cookies
+  --user-agent str Change user agent
+  -H str           Header
 
 Runtime behavior:
 -----------------
-  --timeout      Connection timeout in seconds (default is 4)
+  --timeout int  Connection timeout in seconds (default is 4)
   --insecure     Disable TLS certificate checks
   --no-smp       Disable multi-processor support (SMP enabled by default)
   --follow-redirects  Follow redirects
@@ -38,7 +39,7 @@ Results:
 
   --no-200       Hide HTTP status 200 from summary
   --no-utf8      Disable UTF-8 characters]
-  --no-colour    Disables terminal color escape sequences
+  --no-colour    Disables terminal colour escape sequences
 
 Help:
 -----
