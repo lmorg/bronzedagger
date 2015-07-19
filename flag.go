@@ -32,9 +32,9 @@ func (fs *FlagStrings) Set(value string) error { *fs = append(*fs, value); retur
 func Flags() {
 	flag.Usage = Usage
 
-	d := flag.Int("d", 1, "duration")
-	c := flag.Int("c", 1, "Concurrency")
-	r := flag.Int("r", 1, "requests per thread")
+	flag.IntVar(&f_duration, "d", 0, "duration")
+	flag.IntVar(&f_concurrency, "c", 5, "Concurrency")
+	flag.IntVar(&f_nreqs, "r", 5, "requests per thread")
 	f_one_req := flag.Bool("1", false, "single request (alias for -d 1 -c 1 -r 1)")
 	flag.IntVar(&f_rounding, "round", 250, "rounding")
 
@@ -76,15 +76,11 @@ func Flags() {
 
 	f_urls = flag.Args()
 
-	// set curl-like single request - then allows for -d / -c / -r overrides.
-	if !*f_one_req {
-		f_duration = 0
-		f_concurrency = 5
-		f_nreqs = 5
-	} else {
-		f_duration = *d
-		f_concurrency = *c
-		f_nreqs = *r
+	// set curl-like single request (disables -d / -c / -r)
+	if *f_one_req {
+		f_duration = 1
+		f_concurrency = 1
+		f_nreqs = 1
 	}
 
 	if f_config != "" {
