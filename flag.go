@@ -77,14 +77,14 @@ func Flags() {
 	f_urls = flag.Args()
 
 	// set curl-like single request - then allows for -d / -c / -r overrides.
-	if f_one_req {
+	if *f_one_req {
 		f_duration = 1
 		f_concurrency = 1
 		f_nreqs = 1
 	}
-	f_duration = d
-	f_concurrency = c
-	f_nreqs = r
+	f_duration = *d
+	f_concurrency = *c
+	f_nreqs = *r
 
 	if f_config != "" {
 		fmt.Println("TODO: needs to be reimplemented")
