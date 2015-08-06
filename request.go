@@ -122,6 +122,12 @@ func httpRequest(job *Job, client *http.Client, request *http.Request) {
 		} else if strings.Contains(err.Error(), "i/o timeout") {
 			log.Println(CROSS, `006 connection timed out`, job.URL, len(body), duration)
 			ret(6)
+		} else if strings.Contains(err.Error(), "use of closed network connection") {
+			log.Println(CROSS, `007 use of closed network connection`, job.URL, len(body), duration)
+			ret(7)
+		} else if strings.Contains(err.Error(), "request canceled while waiting for connection") {
+			log.Println(CROSS, `008 request canceled while waiting for connection`, job.URL, len(body), duration)
+			ret(8)
 		} else {
 			log.Println(CROSS, `000 `+err.Error(), job.URL, len(body), duration)
 			ret(0)
