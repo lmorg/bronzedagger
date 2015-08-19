@@ -16,7 +16,8 @@ Request weight:
 Request packet:
 ---------------
   --ref str        Referrer
-  --cookies str    Requester cookies
+  --cookie str     Requester cookie (flag can be issued multiple times)
+  --cookies str    Requester cookies (semi-colon delimited, flag only used one)
   --user-agent str Change user agent
   -H str           Header
 

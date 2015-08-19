@@ -18,7 +18,8 @@ var (
 	f_firesword_log string
 	f_debug         bool
 	f_urls          []string
-	f_cookies       FlagStrings
+	f_cookie        FlagStrings
+	f_cookies       string
 	f_headers       FlagStrings
 	f_user_agent    string
 	f_config        string
@@ -48,7 +49,8 @@ func Flags() {
 
 	// HTTP request
 	flag.StringVar(&f_referrer, "ref", "", "")
-	flag.Var(&f_cookies, "cookie", "")
+	flag.Var(&f_cookie, "cookie", "")
+	flag.StringVar(&f_cookies, "cookies", "", "")
 	flag.StringVar(&f_user_agent, "user-agent", USER_AGENT, "")
 	flag.Var(&f_headers, "H", "")
 

@@ -4,6 +4,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strings"
 	"sync"
 	"time"
 )
@@ -43,8 +44,12 @@ func NewJob() (job *Job) {
 	job.Referrer = f_referrer
 	job.Method = "GET" // no other method currently supported
 
-	for i, _ := range f_cookies {
-		ParseCookie(job, f_cookies[i])
+	for i, _ := range f_cookie {
+		ParseCookie(job, f_cookie[i])
+	}
+
+	for _, cookie := range strings.Split(f_cookies, ";") {
+		ParseCookie(job, strings.TrimSpace(cookie))
 	}
 
 	for i, _ := range f_headers {
@@ -56,7 +61,12 @@ func NewJob() (job *Job) {
 
 func (job *Job) Fork(url string) (fork Job) {
 	fork = *job
-	fork.URL = url
+
+	if strings.Contains(url, "://") {
+		fork.URL = url
+	} else {
+		fork.URL = "http://" + url
+	}
 
 	return
 }

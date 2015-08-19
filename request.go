@@ -14,6 +14,10 @@ import (
 )
 
 func ParseCookie(job *Job, s string) {
+	if s == "" {
+		return
+	}
+
 	split := strings.Split(s, "=")
 	if len(split) >= 2 {
 		job.Cookies[split[0]] = strings.Join(split[1:], "=")

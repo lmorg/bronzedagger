@@ -12,7 +12,7 @@ import (
 
 const (
 	APP_NAME  = "BronzeDagger"
-	VERSION   = "3.01.0444 ALPHA"
+	VERSION   = "3.01.0460 ALPHA"
 	COPYRIGHT = "© 2014-2015 Laurence Morgan"
 )
 
@@ -56,6 +56,7 @@ func main() {
 	go UpdateResults()
 	go StartFSLog()
 
+	// conf file will be supported again at some point in the future
 	/*if conf_filename != "" {
 		for i := 0; i < len(config); i++ {
 			switch config[i][0] {
