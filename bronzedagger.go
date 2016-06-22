@@ -12,8 +12,8 @@ import (
 
 const (
 	APP_NAME  = "BronzeDagger"
-	VERSION   = "3.01.0460 ALPHA"
-	COPYRIGHT = "© 2014-2015 Laurence Morgan"
+	VERSION   = "3.02.0500"
+	COPYRIGHT = "© 2014-2016 Laurence Morgan"
 )
 
 var (

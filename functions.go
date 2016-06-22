@@ -1,9 +1,9 @@
 package main
 
 import (
-	"io/ioutil"
+	//"io/ioutil"
 	"regexp"
-	"strings"
+	//"strings"
 )
 
 var (
@@ -24,6 +24,7 @@ func Lower(val int) int {
 	return int(val/f_rounding) * f_rounding
 }
 
+/*
 func readConfig(filename string) (config [][]string) {
 	if filename == "" {
 		return
@@ -39,3 +40,4 @@ func readConfig(filename string) (config [][]string) {
 
 	return
 }
+*/
