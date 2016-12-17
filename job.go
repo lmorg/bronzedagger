@@ -44,7 +44,7 @@ func NewJob() (job *Job) {
 	job.Referrer = fReferrer
 	job.Method = "GET" // no other method currently supported
 
-	for i, _ := range fCookie {
+	for i := range fCookie {
 		parseCookie(job, fCookie[i])
 	}
 
@@ -52,7 +52,7 @@ func NewJob() (job *Job) {
 		parseCookie(job, strings.TrimSpace(cookie))
 	}
 
-	for i, _ := range fHeaders {
+	for i := range fHeaders {
 		parseHeaders(job, fHeaders[i])
 	}
 

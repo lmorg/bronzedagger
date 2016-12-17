@@ -70,7 +70,7 @@ func httpClient(job *Job) (client *http.Client, request *http.Request) {
 
 	request.Header.Set("User-Agent", job.UserAgent)
 	request.Header.Set("Referer", job.Referrer)
-	for header, _ := range job.Headers {
+	for header := range job.Headers {
 		request.Header.Set(header, job.Headers[header])
 	}
 	debugLog("Host:", u.Host)
@@ -142,7 +142,7 @@ func httpRequest(job *Job, client *http.Client, request *http.Request) {
 	ret := Response{Status: resp.StatusCode}
 
 	if resp.StatusCode == 200 {
-		ret.Duration = Lower(int(duration))
+		ret.Duration = lower(int(duration))
 		if !fNo200 {
 			log.Println(uiPass, resp.StatusCode, job.URL, len(body), duration)
 		}

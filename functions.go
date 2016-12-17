@@ -1,26 +1,16 @@
 package main
 
-import (
-	//"io/ioutil"
-	"regexp"
-	//"strings"
-)
-
-var (
-	rx_tsv *regexp.Regexp
-)
-
-func init() {
-	rx_tsv = regexCompile(`\s+`)
-}
+/*
+var rx_tsv *regexp.Regexp = regexCompile(`\s+`)
 
 func regexCompile(s string) *regexp.Regexp {
 	r, err := regexp.Compile(s)
 	isErr(err)
 	return r
 }
+*/
 
-func Lower(val int) int {
+func lower(val int) int {
 	return int(val/fRounding) * fRounding
 }
 
