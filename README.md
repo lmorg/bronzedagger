@@ -49,6 +49,7 @@ Then download this repo and install
 
       --log str      Write Apache combined log file for parsing with Firesword
 
+      --no--summary  Don't show summary (more useful for shell scripting)
       --no-200       Hide HTTP status 200 from summary
       --no-utf8      Disable UTF-8 characters]
       --no-colour    Disables terminal colour escape sequences

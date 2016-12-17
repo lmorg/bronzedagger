@@ -8,6 +8,7 @@ import (
 )
 
 var (
+	f_no_summary    bool
 	f_referrer      string
 	f_redirects     bool
 	f_duration      int
@@ -63,6 +64,7 @@ func Flags() {
 
 	// logging formating
 	flag.BoolVar(&f_no_200, "no-200", false, "Hide status 200 responses")
+	flag.BoolVar(&f_no_summary, "no-summary", false, "Hide summary")
 	f_no_utf8 := flag.Bool("no-utf8", false, "Disable UTF8 characters")
 	f_no_color := flag.Bool("no-color", false, "Disable colour")
 	f_no_colour := flag.Bool("no-colour", false, "Disable colour")

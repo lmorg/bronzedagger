@@ -30,6 +30,10 @@ func UpdateResults() {
 }
 
 func summary() {
+	if f_no_summary {
+		return
+	}
+
 	fmt.Println("\n        #  Status  Description")
 	// sort
 	var k_results []int

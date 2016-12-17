@@ -12,7 +12,7 @@ import (
 
 const (
 	APP_NAME  = "BronzeDagger"
-	VERSION   = "3.02.0500"
+	VERSION   = "3.03.0510"
 	COPYRIGHT = "© 2014-2016 Laurence Morgan"
 )
 
@@ -49,7 +49,8 @@ func main() {
 	go func() {
 		<-c
 		summary()
-		os.Exit(return_val)
+		//os.Exit(return_val)
+		os.Exit(2)
 	}()
 
 	// start results event loop
