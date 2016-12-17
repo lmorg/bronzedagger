@@ -3,19 +3,19 @@ package main
 import "os"
 
 var (
-	firesword_log chan string
+	fsLog chan string
 )
 
 func init() {
-	firesword_log = make(chan string)
+	fsLog = make(chan string)
 }
 
 func StartFSLog() {
-	if f_firesword_log == "" {
+	if fFsLog == "" {
 		return
 	}
 
-	f, err := os.OpenFile(f_firesword_log, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	f, err := os.OpenFile(fFsLog, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
 		panic(err)
 	}
@@ -23,7 +23,7 @@ func StartFSLog() {
 	defer f.Close()
 
 	for {
-		fsl := <-firesword_log
+		fsl := <-fsLog
 
 		if _, err = f.WriteString(fsl + "\n"); err != nil {
 			panic(err)

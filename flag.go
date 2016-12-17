@@ -8,22 +8,28 @@ import (
 )
 
 var (
-	f_no_summary    bool
-	f_referrer      string
-	f_redirects     bool
-	f_duration      int
-	f_concurrency   int
-	f_insecure      bool
-	f_timeout       int64
-	f_nreqs         int
-	f_firesword_log string
-	f_debug         bool
-	f_urls          []string
-	f_cookie        FlagStrings
-	f_cookies       string
-	f_headers       FlagStrings
-	f_user_agent    string
-	f_config        string
+	fReqHeaders       bool
+	fRespHeaders      bool
+	fRespBody         bool
+	fUserAgent        string
+	fNo200            bool
+	fRounding         int
+	fNoSummary        bool
+	fReferrer         string
+	fRedirects        bool
+	fDuration         int
+	fConcurrency      int
+	fInsecure         bool
+	fTimeout          int64
+	fNReqs            int
+	fFsLog            string
+	fDebug            bool
+	fUrls             []string
+	fCookie           FlagStrings
+	fCookies          string
+	fHeaders          FlagStrings
+	fConfig           string
+	fMaxDisplayedTime int
 )
 
 type FlagStrings []string
@@ -31,109 +37,110 @@ type FlagStrings []string
 func (fs *FlagStrings) String() string         { return fmt.Sprint(*fs) }
 func (fs *FlagStrings) Set(value string) error { *fs = append(*fs, value); return nil }
 
-func Flags() {
-	flag.Usage = Usage
+func flags() {
+	flag.Usage = usage
 
-	flag.IntVar(&f_duration, "d", 0, "duration")
-	flag.IntVar(&f_concurrency, "c", 5, "Concurrency")
-	flag.IntVar(&f_nreqs, "r", 5, "requests per thread")
-	f_one_req := flag.Bool("1", false, "single request (alias for -d 1 -c 1 -r 1)")
-	flag.IntVar(&f_rounding, "round", 250, "rounding")
+	flag.IntVar(&fDuration, "d", 0, "duration")
+	flag.IntVar(&fConcurrency, "c", 5, "Concurrency")
+	flag.IntVar(&fNReqs, "r", 5, "requests per thread")
+	fOneReq := flag.Bool("1", false, "single request (alias for -d 1 -c 1 -r 1)")
+	flag.IntVar(&fRounding, "round", 250, "rounding")
 
 	// TODO: needs to be reimplemented
-	flag.StringVar(&f_config, "config", "", "Config file to use")
+	flag.StringVar(&fConfig, "config", "", "Config file to use")
 
-	flag.BoolVar(&req_headers, "req", false, "Output request headers")
-	flag.BoolVar(&resp_headers, "resp", false, "Output response headers")
-	flag.BoolVar(&resp_body, "resp-body", false, "Output response body")
-	flag.IntVar(&display_max, "m", 2000, "Max ms to display in summary")
+	flag.BoolVar(&fReqHeaders, "req", false, "Output request headers")
+	flag.BoolVar(&fRespHeaders, "resp", false, "Output response headers")
+	flag.BoolVar(&fRespBody, "resp-body", false, "Output response body")
+	flag.IntVar(&fMaxDisplayedTime, "m", 2000, "Max ms to display in summary")
 
 	// HTTP request
-	flag.StringVar(&f_referrer, "ref", "", "")
-	flag.Var(&f_cookie, "cookie", "")
-	flag.StringVar(&f_cookies, "cookies", "", "")
-	flag.StringVar(&f_user_agent, "user-agent", USER_AGENT, "")
-	flag.Var(&f_headers, "H", "")
+	flag.StringVar(&fReferrer, "ref", "", "")
+	flag.Var(&fCookie, "cookie", "")
+	flag.StringVar(&fCookies, "cookies", "", "")
+	flag.StringVar(&fUserAgent, "user-agent", fmt.Sprintf("%s/%s", AppName, Version), "")
+	flag.Var(&fHeaders, "H", "")
 
 	// behavior
-	flag.Int64Var(&f_timeout, "timeout", 4000, "connection timeout")
-	flag.BoolVar(&f_insecure, "insecure", false, "disable TLS validity check")
-	flag.BoolVar(&f_redirects, "follow-redirects", false, "")
-	f_no_smp := flag.Bool("no-smp", false, "GOMAXPROCS")
-	flag.BoolVar(&f_debug, "debug", false, "debug mode")
+	flag.Int64Var(&fTimeout, "timeout", 4000, "connection timeout")
+	flag.BoolVar(&fInsecure, "insecure", false, "disable TLS validity check")
+	flag.BoolVar(&fRedirects, "follow-redirects", false, "")
+	fNoSmp := flag.Bool("no-smp", false, "GOMAXPROCS")
+	flag.BoolVar(&fDebug, "debug", false, "debug mode")
 
-	// logging formating
-	flag.BoolVar(&f_no_200, "no-200", false, "Hide status 200 responses")
-	flag.BoolVar(&f_no_summary, "no-summary", false, "Hide summary")
-	f_no_utf8 := flag.Bool("no-utf8", false, "Disable UTF8 characters")
-	f_no_color := flag.Bool("no-color", false, "Disable colour")
-	f_no_colour := flag.Bool("no-colour", false, "Disable colour")
-	flag.StringVar(&f_firesword_log, "log", "", "")
+	// logging formatting
+	flag.BoolVar(&fNo200, "no-200", false, "Hide status 200 responses")
+	flag.BoolVar(&fNoSummary, "no-summary", false, "Hide summary")
+	fNoUtf8 := flag.Bool("no-utf8", false, "Disable UTF8 characters")
+	fNoColor := flag.Bool("no-color", false, "Disable colour")
+	fNoColour := flag.Bool("no-colour", false, "Disable colour") // I'm english :P
+	flag.StringVar(&fFsLog, "log", "", "")
 
 	// help
-	f_help1 := flag.Bool("h", false, "Prints this message")
-	f_help2 := flag.Bool("?", false, "Same as -h")
-	f_version1 := flag.Bool("v", false, "Prints version number")
-	f_version2 := flag.Bool("version", false, "Prints version number")
+	fHelp1 := flag.Bool("h", false, "Prints this message")
+	fHelp2 := flag.Bool("?", false, "Same as -h")
+	fVersion1 := flag.Bool("v", false, "Prints version number")
+	fVersion2 := flag.Bool("version", false, "Prints version number")
 
 	flag.Parse()
 
-	f_urls = flag.Args()
+	fUrls = flag.Args()
 
 	// set curl-like single request (disables -d / -c / -r)
-	if *f_one_req {
-		f_duration = 1
-		f_concurrency = 1
-		f_nreqs = 1
+	if *fOneReq {
+		fDuration = 1
+		fConcurrency = 1
+		fNReqs = 1
 	}
 
-	if f_config != "" {
+	if fConfig != "" {
 		fmt.Println("TODO: needs to be reimplemented")
 		os.Exit(1)
 	}
 
-	if *f_help1 || *f_help2 {
+	if *fHelp1 || *fHelp2 {
 		flag.Usage()
 		os.Exit(1)
 	}
 
-	if *f_version1 || *f_version2 {
-		fmt.Println(APP_NAME, VERSION, "\n"+COPYRIGHT)
+	if *fVersion1 || *fVersion2 {
+		fmt.Println(AppName, Version)
+		fmt.Println(Copyright)
 		os.Exit(1)
 	}
 
-	if f_config == "" && len(f_urls) == 0 {
+	if fConfig == "" && len(fUrls) == 0 {
 		fmt.Println("Missing parameters:")
 		flag.Usage()
 		os.Exit(1)
 	}
 
-	if f_concurrency == 0 && f_nreqs == 0 {
+	if fConcurrency == 0 && fNReqs == 0 {
 		fmt.Println("Zero requests to make. Either concurrency and/or requests per thread need to be a non-zero value.")
 		os.Exit(1)
 	}
 
-	if *f_no_smp {
+	if *fNoSmp {
 		runtime.GOMAXPROCS(runtime.NumCPU())
 	}
 
-	var pass_ico, pass_start, pass_end, fail_ico, fail_start, fail_end string
+	var passIcon, passStart, passEnd, failIcon, failStart, failEnd string
 
-	if !*f_no_color || !*f_no_colour {
-		pass_start = "\x1b[32m"
-		pass_end = "\x1b[0m"
-		fail_start = "\x1b[31m"
-		fail_end = "\x1b[0m"
+	if !*fNoColor || !*fNoColour {
+		passStart = "\x1b[32m"
+		passEnd = "\x1b[0m"
+		failStart = "\x1b[31m"
+		failEnd = "\x1b[0m"
 	}
 
-	if !*f_no_utf8 {
-		pass_ico = "✔"
-		fail_ico = "✘"
+	if !*fNoUtf8 {
+		passIcon = "✔"
+		failIcon = "✘"
 	} else {
-		pass_ico = " "
-		fail_ico = "X"
+		passIcon = " "
+		failIcon = "X"
 	}
 
-	TICK = pass_start + pass_ico + pass_end
-	CROSS = fail_start + fail_ico + fail_end
+	uiPass = passStart + passIcon + passEnd
+	uiFail = failStart + failIcon + failEnd
 }

@@ -14,7 +14,7 @@ func isErr(err error) bool {
 }
 
 func debugLog(v ...interface{}) {
-	if f_debug {
+	if fDebug {
 		log.Println(v...)
 	}
 }

@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func Usage() {
+func usage() {
 	fmt.Print(`Usage: bronzedagger [options] http://example1.com http://example2.com
                     [options] --config example.com.json
 

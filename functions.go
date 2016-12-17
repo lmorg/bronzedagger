@@ -21,7 +21,7 @@ func regexCompile(s string) *regexp.Regexp {
 }
 
 func Lower(val int) int {
-	return int(val/f_rounding) * f_rounding
+	return int(val/fRounding) * fRounding
 }
 
 /*

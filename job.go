@@ -32,28 +32,28 @@ func NewJob() (job *Job) {
 	job.Headers = make(map[string]string)
 
 	// some defaults
-	job.Concurrency = f_concurrency
-	job.Threads = f_nreqs
-	job.Duration = f_duration
+	job.Concurrency = fConcurrency
+	job.Threads = fNReqs
+	job.Duration = fDuration
 
-	job.FollowRedirects = f_redirects
-	job.Insecure = f_insecure
-	job.Timeout = time.Duration(f_timeout * int64(time.Millisecond))
+	job.FollowRedirects = fRedirects
+	job.Insecure = fInsecure
+	job.Timeout = time.Duration(fTimeout * int64(time.Millisecond))
 
-	job.UserAgent = f_user_agent
-	job.Referrer = f_referrer
+	job.UserAgent = fUserAgent
+	job.Referrer = fReferrer
 	job.Method = "GET" // no other method currently supported
 
-	for i, _ := range f_cookie {
-		ParseCookie(job, f_cookie[i])
+	for i, _ := range fCookie {
+		parseCookie(job, fCookie[i])
 	}
 
-	for _, cookie := range strings.Split(f_cookies, ";") {
-		ParseCookie(job, strings.TrimSpace(cookie))
+	for _, cookie := range strings.Split(fCookies, ";") {
+		parseCookie(job, strings.TrimSpace(cookie))
 	}
 
-	for i, _ := range f_headers {
-		ParseHeaders(job, f_headers[i])
+	for i, _ := range fHeaders {
+		parseHeaders(job, fHeaders[i])
 	}
 
 	return
@@ -103,7 +103,7 @@ func (job *Job) Start(wait *sync.WaitGroup) {
 				wg.Add(1)
 				go func() {
 					defer wg.Done()
-					for n := 0; n < f_nreqs; n++ {
+					for n := 0; n < fNReqs; n++ {
 						client, request = httpClient(job)
 						httpRequest(job, client, request)
 					}

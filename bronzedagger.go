@@ -2,41 +2,31 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/signal"
-	"strings"
 	"sync"
 	"syscall"
 )
 
 const (
-	APP_NAME  = "BronzeDagger"
-	VERSION   = "3.03.0510"
-	COPYRIGHT = "© 2014-2016 Laurence Morgan"
+	AppName   = "BronzeDagger"
+	Version   = "3.03.0600"
+	Copyright = "© 2014-2016 Laurence Morgan"
 )
 
 var (
-	f_no_200     bool
-	f_rounding   int
-	req_headers  bool
-	resp_headers bool
-	resp_body    bool
-	display_max  int
-	return_val   int
-	TICK         string
-	CROSS        string
-	USER_AGENT   string
+	return_val int
+	uiPass     string
+	uiFail     string
 )
 
 func init() {
 	results = make(map[int]int, 10000)
-	load_times = make(map[int]int, 10000)
-	USER_AGENT = strings.Replace(fmt.Sprintf("%s/%s", APP_NAME, VERSION), " ", "", -1)
+	loadTimes = make(map[int]int, 10000)
 }
 
 func main() {
-	Flags()
+	flags()
 
 	job := NewJob()
 
@@ -54,7 +44,7 @@ func main() {
 	}()
 
 	// start results event loop
-	go UpdateResults()
+	go updateResults()
 	go StartFSLog()
 
 	// conf file will be supported again at some point in the future
@@ -74,7 +64,7 @@ func main() {
 
 	} else {*/
 	var wg sync.WaitGroup
-	for _, url := range f_urls {
+	for _, url := range fUrls {
 		wg.Add(1)
 		fork := job.Fork(url)
 		go fork.Start(&wg)
