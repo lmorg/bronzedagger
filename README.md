@@ -42,14 +42,14 @@ Then download this repo and install
     Results:
     --------
       -m int         Max ms to display in summary
-      --round int    Group results by duration, rounded down to the nearest int
+      --round int    In summary group results by duration, rounded down to the nearest int
       --req          Display request headers
       --resp         Display response headers
       --resp-body    Display response body
 
-      --log str      Write Apache combined log file for parsing with Firesword
+      --log str      Write Apache combined log file for parsing with Firesword / Plasmasword
 
-      --no--summary  Don't show summary (more useful for shell scripting)
+      --no-summary   Don't show summary (more useful for shell scripting)
       --no-200       Hide HTTP status 200 from summary
       --no-utf8      Disable UTF-8 characters]
       --no-colour    Disables terminal colour escape sequences
