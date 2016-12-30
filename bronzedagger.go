@@ -15,9 +15,8 @@ const (
 )
 
 var (
-	return_val int
-	uiPass     string
-	uiFail     string
+	uiPass string
+	uiFail string
 )
 
 func init() {
@@ -39,7 +38,6 @@ func main() {
 	go func() {
 		<-c
 		summary()
-		//os.Exit(return_val)
 		os.Exit(2)
 	}()
 
@@ -63,16 +61,23 @@ func main() {
 		}
 
 	} else {*/
-	var wg sync.WaitGroup
-	for _, url := range fUrls {
-		wg.Add(1)
-		fork := job.Fork(url)
-		go fork.Start(&wg)
+	if fConcurrentUrls {
+		var wg sync.WaitGroup
+		for _, url := range fUrls {
+			wg.Add(1)
+			fork := job.Fork(url)
+			go fork.Start()
+		}
+		wg.Wait()
+	} else {
+		for _, url := range fUrls {
+			fork := job.Fork(url)
+			fork.Start()
+		}
 	}
-	wg.Wait()
 	//}
 
 	debugLog("All routines ended. Generating summary")
 	summary()
-	os.Exit(return_val)
+	os.Exit(0)
 }

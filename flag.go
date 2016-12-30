@@ -8,6 +8,7 @@ import (
 )
 
 var (
+	fConcurrentUrls   bool
 	fReqHeaders       bool
 	fRespHeaders      bool
 	fRespBody         bool
@@ -40,19 +41,19 @@ func (fs *FlagStrings) Set(value string) error { *fs = append(*fs, value); retur
 func flags() {
 	flag.Usage = usage
 
-	flag.IntVar(&fDuration, "d", 0, "duration")
-	flag.IntVar(&fConcurrency, "c", 5, "Concurrency")
-	flag.IntVar(&fNReqs, "r", 5, "requests per thread")
-	fOneReq := flag.Bool("1", false, "single request (alias for -d 1 -c 1 -r 1)")
-	flag.IntVar(&fRounding, "round", 250, "rounding")
+	flag.IntVar(&fDuration, "d", 0, "")
+	flag.IntVar(&fConcurrency, "c", 1, "")
+	flag.IntVar(&fNReqs, "r", 1, "")
+	flag.BoolVar(&fConcurrentUrls, "concurrent-urls", false, "")
+	flag.IntVar(&fRounding, "round", 250, "")
 
 	// TODO: needs to be reimplemented
-	flag.StringVar(&fConfig, "config", "", "Config file to use")
+	flag.StringVar(&fConfig, "config", "", "")
 
-	flag.BoolVar(&fReqHeaders, "req", false, "Output request headers")
-	flag.BoolVar(&fRespHeaders, "resp", false, "Output response headers")
-	flag.BoolVar(&fRespBody, "resp-body", false, "Output response body")
-	flag.IntVar(&fMaxDisplayedTime, "m", 2000, "Max ms to display in summary")
+	flag.BoolVar(&fReqHeaders, "req", false, "")
+	flag.BoolVar(&fRespHeaders, "resp", false, "")
+	flag.BoolVar(&fRespBody, "resp-body", false, "")
+	flag.IntVar(&fMaxDisplayedTime, "m", 2000, "")
 
 	// HTTP request
 	flag.StringVar(&fReferrer, "ref", "", "")
@@ -62,36 +63,28 @@ func flags() {
 	flag.Var(&fHeaders, "H", "")
 
 	// behavior
-	flag.Int64Var(&fTimeout, "timeout", 4000, "connection timeout")
-	flag.BoolVar(&fInsecure, "insecure", false, "disable TLS validity check")
+	flag.Int64Var(&fTimeout, "timeout", 4000, "")
+	flag.BoolVar(&fInsecure, "insecure", false, "")
 	flag.BoolVar(&fRedirects, "follow-redirects", false, "")
-	fNoSmp := flag.Bool("no-smp", false, "GOMAXPROCS")
-	flag.BoolVar(&fDebug, "debug", false, "debug mode")
+	flag.BoolVar(&fDebug, "debug", false, "")
 
 	// logging formatting
-	flag.BoolVar(&fNo200, "no-200", false, "Hide status 200 responses")
-	flag.BoolVar(&fNoSummary, "no-summary", false, "Hide summary")
-	fNoUtf8 := flag.Bool("no-utf8", false, "Disable UTF8 characters")
-	fNoColor := flag.Bool("no-color", false, "Disable colour")
-	fNoColour := flag.Bool("no-colour", false, "Disable colour") // I'm english :P
+	flag.BoolVar(&fNo200, "no-200", false, "")
+	flag.BoolVar(&fNoSummary, "no-summary", false, "")
+	fNoUtf8 := flag.Bool("no-utf8", false, "")
+	fNoColor := flag.Bool("no-color", false, "")
+	fNoColour := flag.Bool("no-colour", false, "") // I'm english :P
 	flag.StringVar(&fFsLog, "log", "", "")
 
 	// help
-	fHelp1 := flag.Bool("h", false, "Prints this message")
-	fHelp2 := flag.Bool("?", false, "Same as -h")
-	fVersion1 := flag.Bool("v", false, "Prints version number")
-	fVersion2 := flag.Bool("version", false, "Prints version number")
+	fHelp1 := flag.Bool("h", false, "")
+	fHelp2 := flag.Bool("?", false, "")
+	fVersion1 := flag.Bool("v", false, "")
+	fVersion2 := flag.Bool("version", false, "")
 
 	flag.Parse()
 
 	fUrls = flag.Args()
-
-	// set curl-like single request (disables -d / -c / -r)
-	if *fOneReq {
-		fDuration = 1
-		fConcurrency = 1
-		fNReqs = 1
-	}
 
 	if fConfig != "" {
 		fmt.Println("TODO: needs to be reimplemented")
@@ -118,10 +111,6 @@ func flags() {
 	if fConcurrency == 0 && fNReqs == 0 {
 		fmt.Println("Zero requests to make. Either concurrency and/or requests per thread need to be a non-zero value.")
 		os.Exit(1)
-	}
-
-	if *fNoSmp {
-		runtime.GOMAXPROCS(runtime.NumCPU())
 	}
 
 	var passIcon, passStart, passEnd, failIcon, failStart, failEnd string

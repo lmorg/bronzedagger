@@ -9,9 +9,9 @@ func usage() {
 Request weight:
 ---------------
   -d int         Duration to run test (default is indefinitely)
-  -r int         Number of requests per routines - executed in sequence (default is 5)
-  -c int         Concurrency; number of routines running in parallel (default is 5)
-  -1             Single request (alias for -d 1 -r 1 -c 1)
+  -r int         Number of requests per routines - executed in sequence (default is 1)
+  -c int         Concurrency; number of routines running in parallel (default is 1)
+  --concurrent-urls If multiple URLs supplied then test then concurrently rather than sequentially
 
 Request packet:
 ---------------
@@ -25,7 +25,6 @@ Runtime behavior:
 -----------------
   --timeout int  Connection timeout in seconds (default is 4)
   --insecure     Disable TLS certificate checks
-  --no-smp       Disable multi-processor support (SMP enabled by default)
   --follow-redirects  Follow redirects
 
 Results:
@@ -46,6 +45,6 @@ Results:
 Help:
 -----
   -h | -?        Prints this usage guide
-  -v             Prints version number
+  -v | --version Prints version number
 `)
 }

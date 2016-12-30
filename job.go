@@ -11,7 +11,7 @@ import (
 
 type Job struct {
 	URL             string
-	IPOverride      string //TODO: impliment this
+	IPOverride      string //TODO: implement this
 	Cookies         map[string]string
 	Headers         map[string]string
 	Body            string
@@ -82,7 +82,7 @@ func (job *Job) AddCookies(request *http.Request) {
 	}
 }
 
-func (job *Job) Start(wait *sync.WaitGroup) {
+func (job *Job) Start() {
 	var (
 		wg      sync.WaitGroup
 		client  *http.Client
@@ -116,7 +116,7 @@ func (job *Job) Start(wait *sync.WaitGroup) {
 		//}
 	}
 	wg.Wait()
-	if wait != nil {
-		wait.Done()
-	}
+	//if wait != nil {
+	//	wait.Done()
+	//}
 }
