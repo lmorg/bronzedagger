@@ -1,9 +1,7 @@
 package main
 
 import (
-	"net"
 	"net/http"
-	"net/url"
 	"strings"
 	"sync"
 	"time"
@@ -72,8 +70,6 @@ func (job *Job) Fork(url string) (fork Job) {
 }
 
 func (job *Job) AddCookies(request *http.Request) {
-	debugLog("Adding cookies")
-
 	for name, value := range job.Cookies {
 		request.AddCookie(&http.Cookie{
 			Name:  name,
@@ -89,13 +85,12 @@ func (job *Job) Start() {
 		request *http.Request
 	)
 
-	u, err := url.Parse(job.URL)
-	isErr(err)
-	addr, err := net.LookupHost(u.Host)
+	//u, err := url.Parse(job.URL)
 	//isErr(err)
-	addr = []string{"127.0.0.1"} // TODO: delete this crap
-
-	debugLog("addr: ", addr)
+	//addr, err := net.LookupHost(u.Host)
+	//isErr(err)
+	//addr = []string{"127.0.0.1"} // TODO: delete this crap
+	//debugLog("addr: ", addr)
 
 	for i := 0; job.Duration == 0 || i < job.Duration; i++ {
 		go func() {
@@ -111,12 +106,7 @@ func (job *Job) Start() {
 			}
 		}()
 
-		//if r.Duration == 0 || i < r.Duration {
 		time.Sleep(1000 * time.Millisecond)
-		//}
 	}
 	wg.Wait()
-	//if wait != nil {
-	//	wait.Done()
-	//}
 }

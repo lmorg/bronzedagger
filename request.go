@@ -73,7 +73,7 @@ func httpClient(job *Job) (client *http.Client, request *http.Request) {
 	for header := range job.Headers {
 		request.Header.Set(header, job.Headers[header])
 	}
-	debugLog("Host:", u.Host)
+	//debugLog("Host:", u.Host)
 	// for some reason 'request.Host' isn't setting the request header, so doing so manually with request.Header
 	//request.Host = u.Host
 	request.Header.Set("Host", u.Host)

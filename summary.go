@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	chanUpdateResults chan Response
+	chanUpdateResults chan Response = make(chan Response)
 
 	results   map[int]int
 	loadTimes map[int]int
@@ -15,10 +15,6 @@ var (
 type Response struct {
 	Status   int
 	Duration int
-}
-
-func init() {
-	chanUpdateResults = make(chan Response)
 }
 
 func updateResults() {
