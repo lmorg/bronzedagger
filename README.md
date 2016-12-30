@@ -27,6 +27,7 @@ Then download this repo and install
 
     Request packet:
     ---------------
+      --method         Method (default is GET)
       --ref str        Referrer
       --cookies str    Requester cookies
       --user-agent str Change user agent

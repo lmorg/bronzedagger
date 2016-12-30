@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"runtime"
 )
 
 var (
@@ -16,6 +15,7 @@ var (
 	fNo200            bool
 	fRounding         int
 	fNoSummary        bool
+	fMethod           string
 	fReferrer         string
 	fRedirects        bool
 	fDuration         int
@@ -56,6 +56,7 @@ func flags() {
 	flag.IntVar(&fMaxDisplayedTime, "m", 2000, "")
 
 	// HTTP request
+	flag.StringVar(&fMethod, "method", "GET", "")
 	flag.StringVar(&fReferrer, "ref", "", "")
 	flag.Var(&fCookie, "cookie", "")
 	flag.StringVar(&fCookies, "cookies", "", "")

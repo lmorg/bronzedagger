@@ -15,6 +15,7 @@ Request weight:
 
 Request packet:
 ---------------
+  --method         Method (default is GET)
   --ref str        Referrer
   --cookie str     Requester cookie (flag can be issued multiple times)
   --cookies str    Requester cookies (semi-colon delimited, flag only used one)

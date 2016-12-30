@@ -42,7 +42,7 @@ func NewJob() (job *Job) {
 
 	job.UserAgent = fUserAgent
 	job.Referrer = fReferrer
-	job.Method = "GET" // no other method currently supported
+	job.Method = fMethod
 
 	for i := range fCookie {
 		parseCookie(job, fCookie[i])
