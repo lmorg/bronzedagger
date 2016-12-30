@@ -14,6 +14,13 @@ func lower(val int) int {
 	return int(val/fRounding) * fRounding
 }
 
+func noBlankStr(s string) string {
+	if s == "" {
+		return "-"
+	}
+	return s
+}
+
 /*
 func readConfig(filename string) (config [][]string) {
 	if filename == "" {

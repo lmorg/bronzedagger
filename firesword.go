@@ -2,13 +2,7 @@ package main
 
 import "os"
 
-var (
-	fsLog chan string
-)
-
-func init() {
-	fsLog = make(chan string)
-}
+var fsLog chan string = make(chan string)
 
 func StartFSLog() {
 	if fFsLog == "" {

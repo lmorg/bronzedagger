@@ -176,7 +176,7 @@ func httpRequest(job *Job, client *http.Client, request *http.Request) {
 			job.URL, //TODO: no domain name please
 			resp.StatusCode,
 			len(body),
-			"-", //TODO: isBlank(job.Referrer)
+			noBlankStr(job.Referrer),
 			job.UserAgent,
 			duration,
 		)
