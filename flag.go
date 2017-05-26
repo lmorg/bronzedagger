@@ -3,12 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"os"
 )
 
 var (
 	fConcurrentUrls   bool
-	fReqHeaders       bool
+	fRequest          bool
 	fRespHeaders      bool
 	fRespBody         bool
 	fUserAgent        string
@@ -29,7 +30,8 @@ var (
 	fCookie           FlagStrings
 	fCookies          string
 	fHeaders          FlagStrings
-	fBodyFromStdin bool
+	fReqBody          string
+	fReqBodyStdin     bool
 	fConfig           string
 	fMaxDisplayedTime int
 )
@@ -51,7 +53,7 @@ func flags() {
 	// TODO: needs to be reimplemented
 	flag.StringVar(&fConfig, "config", "", "")
 
-	flag.BoolVar(&fReqHeaders, "req", false, "")
+	flag.BoolVar(&fRequest, "req", false, "")
 	flag.BoolVar(&fRespHeaders, "resp-head", false, "")
 	flag.BoolVar(&fRespBody, "resp-body", false, "")
 	flag.IntVar(&fMaxDisplayedTime, "m", 2000, "")
@@ -63,7 +65,8 @@ func flags() {
 	flag.StringVar(&fCookies, "cookies", "", "")
 	flag.StringVar(&fUserAgent, "user-agent", fmt.Sprintf("%s/%s", AppName, Version), "")
 	flag.Var(&fHeaders, "H", "")
-	flag.BoolVar(&fBodyFromStdin, "stdin",false, "")
+	flag.StringVar(&fReqBody, "body", "", "")
+	flag.BoolVar(&fReqBodyStdin, "stdin", false, "")
 
 	// behavior
 	flag.Int64Var(&fTimeout, "timeout", 4000, "")
@@ -135,4 +138,13 @@ func flags() {
 
 	uiPass = passStart + passIcon + passEnd
 	uiFail = failStart + failIcon + failEnd
+
+	if fReqBodyStdin {
+		b, err := ioutil.ReadAll(os.Stdin)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		fReqBody = string(b)
+	}
 }

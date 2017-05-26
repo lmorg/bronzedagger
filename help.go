@@ -21,7 +21,8 @@ Request packet:
   --cookies str    Requester cookies (semi-colon delimited, flag only used one)
   --user-agent str Change user agent
   -H str           Header
-  --stdin          Set HTTP request body to be populated from stdin
+  --body           Request body
+  --stdin          Set HTTP request body to be populated from stdin (overrides --body)
 
 Runtime behavior:
 -----------------
@@ -33,7 +34,7 @@ Results:
 --------
   -m int         Max ms to display in summary
   --round int    In summary group results by duration, rounded down to the nearest int
-  --req          Display request headers
+  --req          Display request headers and body
   --resp-head    Display response headers
   --resp-body    Display response body
 

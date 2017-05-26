@@ -32,7 +32,8 @@ Then download this repo and install
       --cookies str    Requester cookies
       --user-agent str Change user agent
       -H str           Header
-      --stdin          Set HTTP request body to be populated from stdin
+      --body           Request body
+      --stdin          Set HTTP request body to be populated from stdin (overrides --body)
 
     Runtime behavior:
     -----------------
@@ -44,7 +45,7 @@ Then download this repo and install
     --------
       -m int         Max ms to display in summary
       --round int    In summary group results by duration, rounded down to the nearest int
-      --req          Display request headers
+      --req          Display request headers and body
       --resp-head    Display response headers
       --resp-body    Display response body
 

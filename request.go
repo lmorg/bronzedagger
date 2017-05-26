@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/tls"
 	"fmt"
 	"io/ioutil"
@@ -64,8 +65,8 @@ func httpClient(job *Job) (client *http.Client, request *http.Request) {
 	client.Transport = &tr
 	client.Timeout = job.Timeout
 
-	if fBodyFromStdin {
-		request, err = http.NewRequest(job.Method, job.URL, os.Stdin)
+	if len(job.Body) == 0 {
+		request, err = http.NewRequest(job.Method, job.URL, bytes.NewBuffer(job.Body))
 		isErr(err)
 	} else {
 		//request, err = http.NewRequest("GET", u.Scheme+"://"+ip+u.RequestURI(), nil)
@@ -83,7 +84,6 @@ func httpClient(job *Job) (client *http.Client, request *http.Request) {
 	//request.Host = u.Host
 	request.Header.Set("Host", u.Host)
 	job.AddCookies(request)
-
 
 	return client, request
 }
@@ -158,11 +158,12 @@ func httpRequest(job *Job, client *http.Client, request *http.Request) {
 	chanUpdateResults <- ret
 	resp.Body.Close()
 
-	if fReqHeaders {
+	if fRequest {
 		for key, val := range request.Header {
 			fmt.Printf("%20s: %s\n", key, val)
 		}
-		fmt.Println()
+		fmt.Println("\n" + string(job.Body) + "\n")
+		//}
 	}
 
 	if fRespHeaders {

@@ -12,7 +12,7 @@ type Job struct {
 	IPOverride      string //TODO: implement this
 	Cookies         map[string]string
 	Headers         map[string]string
-	Body            string
+	Body            []byte
 	Referrer        string
 	Concurrency     int
 	Duration        int
@@ -41,6 +41,7 @@ func NewJob() (job *Job) {
 	job.UserAgent = fUserAgent
 	job.Referrer = fReferrer
 	job.Method = fMethod
+	job.Body = []byte(fReqBody)
 
 	for i := range fCookie {
 		parseCookie(job, fCookie[i])

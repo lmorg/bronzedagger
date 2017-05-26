@@ -10,7 +10,7 @@ import (
 
 const (
 	AppName   = "BronzeDagger"
-	Version   = "3.03.0600"
+	Version   = "3.04.0620"
 	Copyright = "© 2014-2016 Laurence Morgan"
 )
 
