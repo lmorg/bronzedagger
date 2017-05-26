@@ -3,7 +3,7 @@ Simple load testing and page testing.
 
 This is still very much beta and under active development. But most of the basic features I want are already implemented.
 
-Logging on bronzedagger can also be imported into [Firesword](https://github.com/lmorg/firesword) for analytics.
+Logging on bronzedagger can also be imported into [Firesword](https://github.com/lmorg/firesword) or [Plasmasword](https://github.com/lmorg/plasmasword) for analytics.
 
 ### How to compile:
 
@@ -32,6 +32,7 @@ Then download this repo and install
       --cookies str    Requester cookies
       --user-agent str Change user agent
       -H str           Header
+      --stdin          Set HTTP request body to be populated from stdin
 
     Runtime behavior:
     -----------------
@@ -44,7 +45,7 @@ Then download this repo and install
       -m int         Max ms to display in summary
       --round int    In summary group results by duration, rounded down to the nearest int
       --req          Display request headers
-      --resp         Display response headers
+      --resp-head    Display response headers
       --resp-body    Display response body
 
       --log str      Write Apache combined log file for parsing with Firesword / Plasmasword

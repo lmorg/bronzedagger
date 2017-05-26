@@ -64,9 +64,14 @@ func httpClient(job *Job) (client *http.Client, request *http.Request) {
 	client.Transport = &tr
 	client.Timeout = job.Timeout
 
-	//request, err = http.NewRequest("GET", u.Scheme+"://"+ip+u.RequestURI(), nil)
-	request, err = http.NewRequest(job.Method, job.URL, nil) // TODO: this will eventually support IPs with hostnames using the above code
-	isErr(err)
+	if fBodyFromStdin {
+		request, err = http.NewRequest(job.Method, job.URL, os.Stdin)
+		isErr(err)
+	} else {
+		//request, err = http.NewRequest("GET", u.Scheme+"://"+ip+u.RequestURI(), nil)
+		request, err = http.NewRequest(job.Method, job.URL, nil) // TODO: this will eventually support IPs with hostnames using the above code
+		isErr(err)
+	}
 
 	request.Header.Set("User-Agent", job.UserAgent)
 	request.Header.Set("Referer", job.Referrer)
@@ -78,6 +83,7 @@ func httpClient(job *Job) (client *http.Client, request *http.Request) {
 	//request.Host = u.Host
 	request.Header.Set("Host", u.Host)
 	job.AddCookies(request)
+
 
 	return client, request
 }

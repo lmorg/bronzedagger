@@ -21,6 +21,7 @@ Request packet:
   --cookies str    Requester cookies (semi-colon delimited, flag only used one)
   --user-agent str Change user agent
   -H str           Header
+  --stdin          Set HTTP request body to be populated from stdin
 
 Runtime behavior:
 -----------------
@@ -33,7 +34,7 @@ Results:
   -m int         Max ms to display in summary
   --round int    In summary group results by duration, rounded down to the nearest int
   --req          Display request headers
-  --resp         Display response headers
+  --resp-head    Display response headers
   --resp-body    Display response body
 
   --log str      Write Apache combined log file for parsing with Firesword / Plasmasword

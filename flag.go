@@ -29,6 +29,7 @@ var (
 	fCookie           FlagStrings
 	fCookies          string
 	fHeaders          FlagStrings
+	fBodyFromStdin bool
 	fConfig           string
 	fMaxDisplayedTime int
 )
@@ -51,7 +52,7 @@ func flags() {
 	flag.StringVar(&fConfig, "config", "", "")
 
 	flag.BoolVar(&fReqHeaders, "req", false, "")
-	flag.BoolVar(&fRespHeaders, "resp", false, "")
+	flag.BoolVar(&fRespHeaders, "resp-head", false, "")
 	flag.BoolVar(&fRespBody, "resp-body", false, "")
 	flag.IntVar(&fMaxDisplayedTime, "m", 2000, "")
 
@@ -62,6 +63,7 @@ func flags() {
 	flag.StringVar(&fCookies, "cookies", "", "")
 	flag.StringVar(&fUserAgent, "user-agent", fmt.Sprintf("%s/%s", AppName, Version), "")
 	flag.Var(&fHeaders, "H", "")
+	flag.BoolVar(&fBodyFromStdin, "stdin",false, "")
 
 	// behavior
 	flag.Int64Var(&fTimeout, "timeout", 4000, "")
