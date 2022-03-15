@@ -18,6 +18,7 @@ var (
 	fNoSummary        bool
 	fMethod           string
 	fReferrer         string
+	fProxy            string
 	fRedirects        bool
 	fDuration         int
 	fConcurrency      int
@@ -67,6 +68,7 @@ func flags() {
 	flag.Var(&fHeaders, "H", "")
 	flag.StringVar(&fReqBody, "body", "", "")
 	flag.BoolVar(&fReqBodyStdin, "stdin", false, "")
+	flag.StringVar(&fProxy, "proxy", "", "")
 
 	// behavior
 	flag.Int64Var(&fTimeout, "timeout", 4000, "")

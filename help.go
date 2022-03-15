@@ -17,6 +17,7 @@ Request packet:
 ---------------
   --method         Method (default is GET)
   --ref str        Referrer
+  --proxy          URL of proxy server
   --cookie str     Requester cookie (flag can be issued multiple times)
   --cookies str    Requester cookies (semi-colon delimited, flag only used one)
   --user-agent str Change user agent

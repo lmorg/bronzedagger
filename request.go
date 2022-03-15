@@ -62,6 +62,14 @@ func httpClient(job *Job) (client *http.Client, request *http.Request) {
 
 	tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: job.Insecure}
 
+	if fProxy != "" {
+		proxyUrl, err := url.Parse(fProxy)
+		if err != nil {
+			panic(err)
+		}
+		tr.Proxy = http.ProxyURL(proxyUrl)
+	}
+
 	client.Transport = &tr
 	client.Timeout = job.Timeout
 
